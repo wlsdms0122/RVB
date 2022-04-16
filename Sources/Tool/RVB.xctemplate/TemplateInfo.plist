@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SupportsSwiftPackage</key>
+	<true/>
+	<key>Kind</key>
+	<string>Xcode.IDEFoundation.TextSubstitutionFileTemplateKind</string>
+	<key>Description</key>
+	<string>The RVB module template files.</string>
+	<key>Summary</key>
+	<string>The RVB module template files.</string>
+	<key>SortOrder</key>
+	<string>1</string>
+	<key>AllowedTypes</key>
+	<array>
+		<string>public.swift-source</string>
+	</array>
+	<key>Platforms</key>
+	<array/>
+	<key>DefaultCompletionName</key>
+	<string>RVB</string>
+	<key>Options</key>
+	<array>
+		<dict>
+			<key>Identifier</key>
+			<string>productName</string>
+			<key>Required</key>
+			<true/>
+			<key>Name</key>
+			<string>Name</string>
+			<key>Description</key>
+			<string>Module name</string>
+			<key>Type</key>
+			<string>text</string>
+			<key>NotPersisted</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>UIInterface</string>
+			<key>Required</key>
+			<false/>
+			<key>Name</key>
+			<string>UI Interface</string>
+			<key>Description</key>
+			<string>Create module under the UI system.</string>
+			<key>Type</key>
+			<string>combo</string>
+			<key>Default</key>
+			<string>UIKit</string>
+			<key>Values</key>
+			<array>
+				<string>UIKit</string>
+				<string>SwiftUI</string>
+			</array>
+			<key>NotPersisted</key>
+			<false/>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>View</string>
+			<key>Name</key>
+			<string>with UIView</string>
+			<key>Description</key>
+			<string>Create module with root view.</string>
+			<key>Type</key>
+			<string>checkbox</string>
+			<key>RequiredOptions</key>
+			<dict>
+				<key>UIInterface</key>
+				<array>
+					<string>UIKit</string>
+				</array>
+			</dict>
+		</dict>
+		<dict>
+			<key>Identifier</key>
+			<string>Reactor</string>
+			<key>Name</key>
+			<string>with Reactor</string>
+			<key>Description</key>
+			<string>Create module with reactor.</string>
+			<key>Type</key>
+			<string>checkbox</string>
+			<key>RequiredOptions</key>
+			<dict>
+				<key>UIInterface</key>
+				<array>
+					<string>UIKit</string>
+				</array>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
