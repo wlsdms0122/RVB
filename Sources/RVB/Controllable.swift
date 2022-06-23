@@ -5,16 +5,24 @@
 //  Created by jsilver on 2021/04/11.
 //
 
-import UIKit
 
 /// Define input & output interface to communicate between parent and child.
 public protocol Controllable { }
 
+#if os(iOS)
+import UIKit
+
 public protocol UIViewControllable: Controllable where Self: UIViewController { }
+#endif
+
+#if os(macOS)
+import AppKit
+
+public protocol NSViewControllable: Controllable where Self: NSViewController { }
+#endif
 
 #if canImport(SwiftUI)
 import SwiftUI
 
-@available(iOS 13.0, *)
 public protocol ViewControllable: Controllable where Self: View { }
 #endif
