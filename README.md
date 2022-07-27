@@ -263,6 +263,9 @@ dependencies: [
 ]
 ```
 
+### Xcode Template
+Move to 'Sources/Tool' folder on terminal and run the `ruby install_templates.rb`.
+
 # Sample
 To be continue...
 
