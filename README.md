@@ -13,6 +13,7 @@ RVB focus on problems that occur between modules.
 - [Module](#module)
   - [Dependency & Parameter](#dependency--parameter)
   - [Dependency Injection](#dependency-injection)
+  - [Routing](#Routing)
   - [Communication](#communication)
   - [Shared Object](#shared-object)
 - [Installation](#installation)
@@ -163,6 +164,40 @@ public final class ProductDetailBuilder: Builder<ProductDetailDependency>, Produ
 In this example, dependency(`ProductService`) is injected from parent, but you can instantiate dependency in own module.
 
 And then this case instantiated dependency's top of object graph is Builder.(Object alive until Builder deallocated.)
+
+## Routing
+In RVB, again emphasize that module is view. Therefore "routing" means view presenting.
+
+For example there is scenario that `A` route to `B`, `B` send event to parent and `A` route to `C`.
+
+```swift
+class AViewController: AControllable {
+    ...
+    func presentB() {
+        guard let viewController = router?.routeToB(with: .init()) else { return }
+        
+        viewController.event
+            .subscribe(onNext: { [weak self] in self?.presentC() })
+            .disposed(by: disposeBag)
+        
+        navigationController?.popToViewController(self, animated: true) // ⚠️
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func presentC() {
+        guard let viewController = router?.routeToC(with: .init()) else { return }
+        
+        navigationController?.popToViewController(self, animated: true) // ⚠️
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+```
+
+The important thing is that `View` should guarantee presenting state about routing.
+
+Because the other architectures manage modules own ways like `Router`'s attach, detach of `RIBs`. but `RVB`'s modules are depend on UI system.
+
+`View` know that how to present own state exactly when child module(view) attached. and in example, when `C` module presenting, `A` know that `B` should be detached.
 
 ## Communication
 <image src="https://user-images.githubusercontent.com/11141077/166245557-eb9a31d7-e1c8-42a7-b989-ee1652d9f916.png" />
