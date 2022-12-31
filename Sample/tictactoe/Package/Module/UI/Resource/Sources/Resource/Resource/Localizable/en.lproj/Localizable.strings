@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  
+
+  Created by jsilver on 2021/03/17.
+  
+*/
+
+// MARK: - Common
+"error_title" = "Oops";
+"okay" = "Okay";
+"cancel" = "Cancel";
+
+// MARK: - App
+"app_name" = "Tic Tac Toe";
+
+// MARK: - Signed Out
+"signed_out_title" = "Tic Tac Toe";
+"signed_out_description" = "Sign in game players.";
+"signed_out_player_a_textfield_placeholder" = "Player A Name";
+"signed_out_player_b_textfield_placeholder" = "Player B Name";
+"signed_out_quick_start_button_title" = "Quick Start";
+"signed_out_sign_in_button_title" = "Sign In";
+
+// MARK: - Scoreboard
+"scoreboard_title" = "Scoreboard";
+"scoreboard_description_who_is_leader" = "%@ is leader.";
+"scoreboard_description_title" = "It is currently tied.";
+"scoreboard_play_game_button_title" = "Let's Play The Game!";
+"scoreboard_sign_out_button_title" = "Sign Out";
+
+// MARK: - On Game
+"on_game_title" = "Tic Tac Toe";
+"on_game_turn_title" = "%@ Turn!";
+"on_game_exit_button_title" = "Exit Game";
+"on_game_game_end_alert_title" = "Game Ended!";
+"on_game_game_end_alert_winner_message" = "Player %@ win! 🎉";
+"on_game_game_end_alert_draw_message" = "It ended in a draw.";
+
+// MARK: - Game
+"game_game_error_invalid_position_message" = "You have placed your game piece in the wrong position.";
+"game_game_service_error_empty_player_name_message" = "Player names must not be empty.";
+"game_game_service_error_same_player_name_message" = "Player names must not be the same.";

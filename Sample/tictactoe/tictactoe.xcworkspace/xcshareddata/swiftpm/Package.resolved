@@ -1,0 +1,77 @@
+{
+  "pins" : [
+    {
+      "identity" : "compose",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wlsdms0122/Compose.git",
+      "state" : {
+        "revision" : "431768147e223c3fe07ce4abe2bbfeed7f86a758",
+        "version" : "1.1.0"
+      }
+    },
+    {
+      "identity" : "deeplinker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wlsdms0122/Deeplinker.git",
+      "state" : {
+        "revision" : "adc4c5aee458b57fcb3098bc4bd1ff5f1be13aa5",
+        "version" : "1.1.1"
+      }
+    },
+    {
+      "identity" : "reactorkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactorKit/ReactorKit.git",
+      "state" : {
+        "revision" : "8fa33f09c6f6621a2aa536d739956d53b84dd139",
+        "version" : "3.2.0"
+      }
+    },
+    {
+      "identity" : "route",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/wlsdms0122/Route.git",
+      "state" : {
+        "revision" : "48cd87c99dc3f6667f2a4edbcd47580b5ac9ffc5",
+        "version" : "1.2.0"
+      }
+    },
+    {
+      "identity" : "rxdatasources",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/RxSwiftCommunity/RxDataSources",
+      "state" : {
+        "revision" : "90c29b48b628479097fe775ed1966d75ac374518",
+        "version" : "5.0.2"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift.git",
+      "state" : {
+        "revision" : "b4307ba0b6425c0ba4178e138799946c3da594f8",
+        "version" : "6.5.0"
+      }
+    },
+    {
+      "identity" : "snapkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SnapKit/SnapKit.git",
+      "state" : {
+        "revision" : "f222cbdf325885926566172f6f5f06af95473158",
+        "version" : "5.6.0"
+      }
+    },
+    {
+      "identity" : "weakmaptable",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactorKit/WeakMapTable.git",
+      "state" : {
+        "revision" : "cb05d64cef2bbf51e85c53adee937df46540a74e",
+        "version" : "1.2.1"
+      }
+    }
+  ],
+  "version" : 2
+}
