@@ -48,6 +48,7 @@ final class RootRouter: RootRoutable {
     }
     
     func routeToScoreboard(with parameter: ScoreboardParameter) -> any ScoreboardControllable {
-        scoreboardBuilder.build(with: parameter)
+        let controllable = scoreboardBuilder.build(with: parameter)
+        return ScoreboardAdapter(controllable)
     }
 }

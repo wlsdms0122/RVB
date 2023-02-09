@@ -6,10 +6,10 @@
 //
 
 import SwiftUI
+import Combine
 import RVB
 import Compose
 import RxSwift
-import RxCocoa
 import Route
 import Util
 import Game
@@ -19,9 +19,9 @@ import OnGame
 public protocol ScoreboardControllable: UIViewControllable {
     var players: Players { get }
     
-    var signedOut: Observable<Void> { get }
+    var signedOut: AnyPublisher<Void, Never> { get }
     
-    var disposeBag: DisposeBag { get }
+    var cancellableBag: Set<AnyCancellable> { get set }
     
     func presentOnGame(animated: Bool, force: Bool, completion: ((any OnGameControllable) -> Void)?)
 }
@@ -39,9 +39,9 @@ public class ScoreboardViewController: ComposableController, ScoreboardControlla
     
     public var players: Players { reactor.state.players }
     
-    public let signedOut: Observable<Void>
+    public let signedOut: AnyPublisher<Void, Never>
     
-    public let disposeBag = DisposeBag()
+    public var cancellableBag = Set<AnyCancellable>()
     
     // MARK: - Initializer
     init(
@@ -53,8 +53,8 @@ public class ScoreboardViewController: ComposableController, ScoreboardControlla
         let reactor = reactor.publisher
         self.reactor = reactor
         
-        let signedOut = PublishRelay<Void>()
-        self.signedOut = signedOut.asObservable()
+        let signedOut = PassthroughSubject<Void, Never>()
+        self.signedOut = signedOut.eraseToAnyPublisher()
         
         super.init(reactor)
         
@@ -85,7 +85,7 @@ public class ScoreboardViewController: ComposableController, ScoreboardControlla
                         .removeDuplicates()
                         .compactMap(\.value)
                 ) {
-                    signedOut.accept(Void())
+                    signedOut.send()
                 }
         }
     }
@@ -114,16 +114,16 @@ public class ScoreboardViewController: ComposableController, ScoreboardControlla
         )
             .subscribe(onNext: { [weak self] in
                 guard let self else { return }
-                self.navigationController?.popToViewController(self, animated: true)
+                self.route(self, animated: true)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: onGame.disposeBag)
         
         onGame.gameEnded
             .map { .update($0) }
             .subscribe(onNext: { [weak self] in
                 self?.reactor.action.send($0)
             })
-            .disposed(by: disposeBag)
+            .disposed(by: onGame.disposeBag)
         
         
         route(self, animated: animated) {
