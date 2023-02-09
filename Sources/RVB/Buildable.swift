@@ -13,6 +13,7 @@ public protocol Parameter { }
 
 /// Define build function.
 /// e.g. func build(parameter: Parameter) -> Controllable
+@MainActor
 public protocol Buildable { }
 
 open class Builder<Dependency>: Buildable {
