@@ -24,15 +24,12 @@ public struct ScoreboardDependency: Dependency {
 public struct ScoreboardParameter: Parameter {
     // MARK: - Property
     let players: Players
-    let shouldOnGameRoute: Binding<Players?>?
     
     // MARK: - Initializer
     public init(
-        players: Players,
-        shouldOnGameRoute: Binding<Players?>? = nil
+        players: Players
     ) {
         self.players = players
-        self.shouldOnGameRoute = shouldOnGameRoute
     }
 }
 
