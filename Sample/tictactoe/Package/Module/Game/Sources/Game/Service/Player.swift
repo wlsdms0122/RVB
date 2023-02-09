@@ -20,10 +20,6 @@ public struct Player: Equatable, Codable {
     }
     
     // MARK: - Public
-    public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.name == rhs.name
-    }
-    
     func won() -> Player {
         .init(name: name, score: score + 1)
     }
