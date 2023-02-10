@@ -1,0 +1,43 @@
+/* 
+  Localizable.strings
+  
+
+  Created by jsilver on 2021/03/17.
+  
+*/
+
+// MARK: - Common
+"error_title" = "오류가 발생했습니다.";
+"okay" = "확인";
+"cancel" = "취소";
+
+// MARK: - App
+"app_name" = "Tic Tac Toe";
+
+// MARK: - Signed Out
+"signed_out_title" = "Tic Tac Toe";
+"signed_out_description" = "게임 참가자의 이름을 입력하세요.";
+"signed_out_player_a_textfield_placeholder" = "Player A 이름";
+"signed_out_player_b_textfield_placeholder" = "Player B 이름";
+"signed_out_quick_start_button_title" = "로그인 없이 시작";
+"signed_out_sign_in_button_title" = "플레이어 등록";
+
+// MARK: - Scoreboard
+"scoreboard_title" = "점수 현황판";
+"scoreboard_description_who_is_leader" = "%@가 앞서고있습니다.";
+"scoreboard_description_title" = "현재 동점입니다!";
+"scoreboard_play_game_button_title" = "게임 시작하기";
+"scoreboard_sign_out_button_title" = "로그아웃";
+
+// MARK: - On Game
+"on_game_title" = "Tic Tac Toe";
+"on_game_turn_title" = "%@ 차례!";
+"on_game_exit_button_title" = "게임 종료";
+"on_game_game_end_alert_title" = "게임 종료!";
+"on_game_game_end_alert_winner_message" = "%@가 이겼습니다. 🎉";
+"on_game_game_end_alert_draw_message" = "무승부로 끝났습니다.";
+
+// MARK: - Game
+"game_game_error_invalid_position_message" = "잘못된 위치에 말을 놓았습니다.";
+"game_game_service_error_empty_player_name_message" = "플레이어 이름에 빈 값을 넣을 수 없습니다.";
+"game_game_service_error_same_player_name_message" = "플레이어 이름은 같을 수 없습니다.";

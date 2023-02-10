@@ -6,18 +6,21 @@ Extracted concept of module manage & intercommunicate from these architectures.
 
 RVB focus on problems that occur between modules.
 
+- [RVB](#rvb)
 - [Components](#components)
   - [View](#view)
   - [Router](#router)
   - [Builder](#builder)
 - [Module](#module)
-  - [Dependency & Parameter](#dependency--parameter)
+  - [Dependency \& Parameter](#dependency--parameter)
   - [Dependency Injection](#dependency-injection)
   - [Communication](#communication)
   - [Shared Object](#shared-object)
+  - [Routing](#routing)
+  - [Deeplink](#deeplink)
+- [Sample](#sample)
 - [Installation](#installation)
   - [Swift Package Manager](#swift-package-manager)
-- [Sample](#sample)
 - [License](#license)
 
 # Components
@@ -59,18 +62,18 @@ protocol ChildControllable: UIViewControllable {
 final class ChildControllableAdapter<View: Child.ChildControllable>: UIHostingController<View>, ChildControllable {
     // MARK: - Property
     private let _completed = PublishRelay<Void>()
-    var completed: Observable<Void> { _done.asObservable }
+    var completed: Observable<Void> { _completed.asObservable }
     
     private var cancellableBag = Set<AnyCancellable>()
 
     // MARK: - Initiailzer
-    init(view: View) {
+    override init(rootView: View) {
         super.init(rootView: view)
         
         // Event adapting
-        view.completed
+        rootView.completed
             .sink { [weak self] in self?._completed.accept($0) }
-            .store(&cancellableBag)
+            .store(in: &cancellableBag)
     }
 }
 ```
@@ -251,6 +254,171 @@ public final class DBuilder: Builder<DDependency>, DBuildable {
 
 When module `D` job completed, emit event via injected stream. Then you can skip the layers and listen for events.
 
+## Routing
+In RVB, again emphasize that module is view. Therefore "routing" means view presenting.
+
+For example there is scenario that `A` route to `B`, `B` send event to parent and `A` route to `C`.
+
+```swift
+class AViewController: AControllable {
+    ...
+    func presentB() {
+        guard let viewController = router?.routeToB(with: .init()) else { return }
+        
+        viewController.event
+            .subscribe(onNext: { [weak self] in self?.presentC() })
+            .disposed(by: viewController.disposeBag)
+        
+        navigationController?.popToViewController(self, animated: true) // ⚠️
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    func presentC() {
+        guard let viewController = router?.routeToC(with: .init()) else { return }
+        
+        navigationController?.popToViewController(self, animated: true) // ⚠️
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+}
+```
+
+The important thing is that `View` should guarantee presenting state about routing.
+
+Because the other architectures manage modules own ways like `Router`'s attach, detach of `RIBs`. but `RVB`'s modules are depend on UI system.
+
+`View` know that how to present own state exactly when child module(view) attached. and in example, when `C` module presenting, `A` know that `B` should be disappear.
+
+## Deeplink
+You can implement deeplink flow through the [Routing](#routing) & [Communication](#communication) section.
+
+First, you can start by referencing the [Deeplinker](https://github.com/wlsdms0122/Deeplinker) & [Route](https://github.com/wlsdms0122/Route) packages to assist with your deeplink implementation.
+
+It is crucial that each module takes full responsibility for routing. With this approach, the deeplink handler becomes a straightforward sequence of routing requests, instead of a complex process in and of itself. The deeplink handler simply arranges the order of each module.
+
+Let's explain what is mean "each module takes full responsibility for routing" with example.
+
+```swift
+protocol ParentControllable {
+    ...
+    func presentChild(animated: Bool, force: Bool, completion: ((ChildControllable) -> Void)?)
+}
+```
+
+```swift
+func presentChild(
+    animated: Bool, 
+    force: Bool,
+    completion: ((ChildControllable) -> Void)?
+) {
+    // #1
+    // `search(where:)` search view controllers that satisfied where clause.
+    if let child = search(where: { $0 is ChildControllable })
+        .last as? ChildControllable {
+        // #2
+        guard force else {
+            completion?(child)
+            return
+        }
+        // `route(_:animated:completion:)` is route to view controller if possible.
+        route(child, animated: animated) {
+            completion?(child)
+        }
+        return
+    }
+
+    // #3
+    let child = router?.routeToChild(with: .init())
+
+    child.completed
+        .subscribe(onNext: { [weak self] in
+            guard let self else { return }
+            self.route(self, animated: true) { _ in }
+        })
+        .disposed(by: disposeBag)
+
+    // #4
+    route(self, animated: animated) {
+        $0?.navigationController.pushViewController(child, animated: animated)
+        completion?(child)
+    }
+}
+```
+
+**#1.** The routing method should check if the destination already exists. When searching for a child module, caution should be taken to search the farthest one.
+
+The relationship between a parent and child module is normally not relevant and is only meant to facilitate the flow.
+
+But in some cases, the relation is important and needs to be guaranteed for the flow. For example, there is a deeplink to route to the detail of a product in a commerce app. If the user has already entered the detail with ID 1, the deeplink's destination should be the detail with ID 2. However, the code snippet mentioned above would not be enough, as the search clause does not provide sufficient differentiation.
+
+To resolve this issue, additional conditions can be added to differentiate between modules.
+
+```swift
+func presentDetail(
+    animated: Bool,
+    force: Bool,
+    id: String, 
+    completion: ((DetailControllable) -> Void)?
+) {
+    if let child = search(where: { 
+        guard let child = $0 as? ChildControllable else { return false }
+        return child.id == id
+    })
+        .last as? ChildControllable {
+        ...
+    }
+    ...
+}
+```
+
+Or, if you do not want to check existence every time you instantiate a module, you can avoid writing a search clause.
+
+**#2.** The `force` parameter is used to force the routing even if the destination will not be the top most view controller. This can occur when the deeplink is searching for the child and is already exist in stack. Using the force parameter will ensure that the routing takes place.
+
+**#3.** If child not already exists, instantiate new module and handle events.
+
+When a child event triggers another routing event, such as dismissing the child, the parent should consider its own routing state, as described in the [Routing](#routing) section.
+
+**#4.** New child module routing should start from its parent. So routing logic guarantee route back to parent.
+
+```swift
+func routeToChildLink() {
+    presentParent(animated: true, force: false) { parent in
+        parent.presentChild(animated: true, force: true)
+    }
+}
+```
+
+The deeplink handler, typically the root controller or another designated component, handles the deeplink when it receives a handle request.
+
+The deeplink handler first performs its own routing, and in the completion handler, it uses controllable from closure parameter to route to the next module.
+
+```swift
+func routeToProfileLink() {
+    presentSignedOut(
+        animated: true,
+        force: false,
+        signedIn: { main in
+            main.presentProfile(animated: true, force: true)
+        },
+        completion: nil
+    )
+}
+```
+If you need to wait until user interaction is complete, such as signing in, then you should structure the routing logic to deliver results.
+
+It can be delegate & closure or any streams(`Observable`, `Publisher`).
+
+Let me explain in more detail. You may already have structured a sequence where the root presents the signed out view, the signed out view performs signing in, and then the root presents the main view after receiving the signed in event from the signed out view.
+
+When the signing in process is complete, the root module routes to the main automatically, as the inter-module communication logic has already taken care of that.
+
+Thus the `presentSignedOut(animated:force:signedIn:completion:)` method should deliver the completion of the main routing through the signedIn parameter.
+
+Via description, The structure of the deeplink is simply an arrangement of modules, each of which should be responsible for processing its own responsibilities and providing public interfaces.
+
+# Sample
+- [TicTacToe](https://github.com/wlsdms0122/RVB/tree/develop/Sample/tictactoe)
+
 # Installation
 ## Swift Package Manager
 Package is served, but it's not required. It contain some protocols for namespace, convenience. But it's very simple and less code.
@@ -259,12 +427,9 @@ Ultimately, RVB doesn't want to create constraints on development. It just guide
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/wlsdms0122/RVB.git", branch: "main")
+    .package(url: "https://github.com/wlsdms0122/RVB.git", exact: "1.1.0")
 ]
 ```
-
-# Sample
-To be continue...
 
 # License
 RVB is available under the MIT license.

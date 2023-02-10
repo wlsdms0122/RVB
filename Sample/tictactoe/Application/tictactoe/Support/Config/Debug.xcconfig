@@ -1,0 +1,49 @@
+//
+//  Debug.xcconfig
+//  tictactoe
+//
+//  Created by JSilver on 2023/01/30.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Shared.xcconfig"
+
+// MARK: - Basic Setting
+// App icon name
+ASSETCATALOG_COMPILER_APPICON_NAME = app_icon_develop
+
+// MARK: - Project Setting
+// Bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.rvb.tictactoe-develop
+
+// MARK: - Build Setting
+// Validate built product
+VALIDATE_PRODUCT = NO
+// Build only activate architecture
+ONLY_ACTIVE_ARCH = YES
+// Debug symbol
+DEBUG_INFORMATION_FORMAT = dwarf
+// Testability
+ENABLE_TESTABILITY = YES
+// GCC optimization level
+GCC_OPTIMIZATION_LEVEL = 0
+// Swift complication mode
+SWIFT_COMPILATION_MODE = singlefile
+// Swift optimization level
+SWIFT_OPTIMIZATION_LEVEL = -Onone
+// swift complication conditions
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG DEVELOP
+
+// MARK: - Code Sign
+// Code sign style
+CODE_SIGN_STYLE = Manual
+// Code sign identifier
+CODE_SIGN_IDENTITY = Apple Development
+// Probisioning profile specifier
+PROVISIONING_PROFILE_SPECIFIER = Wildcard Develop
+
+// MARK: - User Define
+// Display name
+BUNDLE_DISPLAY_NAME = TicTacToe-Develop

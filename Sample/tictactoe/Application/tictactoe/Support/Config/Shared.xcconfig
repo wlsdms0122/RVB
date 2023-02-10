@@ -1,0 +1,31 @@
+//
+//  Shared.xcconfig
+//  tictactoe
+//
+//  Created by JSilver on 2023/01/30.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// MARK: - Basic Setting
+// Product name
+PRODUCT_NAME = tictactoe
+// Accent color
+ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = accentColor
+
+// MARK: - Project Setting
+// Base SDK
+SDKROOT = iphoneos
+// Deployment target(iOS)
+IPHONEOS_DEPLOYMENT_TARGET = 15.0
+// Version
+MARKETING_VERSION = 1.0.0
+//Build number
+CURRENT_PROJECT_VERSION = 1
+// Info plist file path
+INFOPLIST_FILE = $(PROJECT_NAME)/Support/Info.plist
+
+// MARK: - Build Setting
+// Swift version
+SWIFT_VERSION = 5

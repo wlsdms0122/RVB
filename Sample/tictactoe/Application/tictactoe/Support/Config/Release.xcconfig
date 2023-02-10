@@ -1,0 +1,49 @@
+//
+//  Release.xcconfig
+//  tictactoe
+//
+//  Created by JSilver on 2023/01/30.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+#include "Shared.xcconfig"
+
+// MARK: - Basic Setting
+// App icon name
+ASSETCATALOG_COMPILER_APPICON_NAME = app_icon_live
+
+// MARK: - Project Setting
+// Bundle identifier
+PRODUCT_BUNDLE_IDENTIFIER = com.rvb.tictactoe-live
+
+// MARK: - Build Setting
+// Validate built product
+VALIDATE_PRODUCT = YES
+// Build only activate architecture
+ONLY_ACTIVE_ARCH = NO
+// Debug symbol
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+// Testability
+ENABLE_TESTABILITY = NO
+// GCC optimization level
+GCC_OPTIMIZATION_LEVEL = s
+// Swift complication mode
+SWIFT_COMPILATION_MODE = wholemodule
+// Swift optimization level
+SWIFT_OPTIMIZATION_LEVEL = -O
+// swift complication conditions
+SWIFT_ACTIVE_COMPILATION_CONDITIONS = LIVE
+
+// MARK: - Code Sign
+// Code sign style
+CODE_SIGN_STYLE = Manual
+// Code sign identifier
+CODE_SIGN_IDENTITY = Apple Distribution
+// Probisioning profile specifier
+PROVISIONING_PROFILE_SPECIFIER = TicTacToe Live Ad hoc
+
+// MARK: - User Define
+// Display name
+BUNDLE_DISPLAY_NAME = TicTacToe-Live
