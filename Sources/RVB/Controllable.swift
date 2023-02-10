@@ -7,6 +7,7 @@
 
 
 /// Define input & output interface to communicate between parent and child.
+@MainActor
 public protocol Controllable { }
 
 #if os(iOS)

@@ -7,4 +7,5 @@
 
 /// Define route path.
 /// e.g. func routeTo(parameter: Parameter) -> Controllable
+@MainActor
 public protocol Routable { }
