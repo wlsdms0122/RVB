@@ -25,7 +25,6 @@ public final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_produc
         let viewController = ___VARIABLE_productName___ViewController()
         let router = ___VARIABLE_productName___Router()
         
-        // DI
         viewController.router = router
         
         return viewController

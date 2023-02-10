@@ -74,23 +74,6 @@
 				</array>
 			</dict>
 		</dict>
-		<dict>
-			<key>Identifier</key>
-			<string>Reactor</string>
-			<key>Name</key>
-			<string>with Reactor</string>
-			<key>Description</key>
-			<string>Create module with reactor.</string>
-			<key>Type</key>
-			<string>checkbox</string>
-			<key>RequiredOptions</key>
-			<dict>
-				<key>UIInterface</key>
-				<array>
-					<string>UIKit</string>
-				</array>
-			</dict>
-		</dict>
 	</array>
 </dict>
 </plist>
