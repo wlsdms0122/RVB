@@ -11,7 +11,7 @@ final class ___VARIABLE_productName___ViewController: UIViewController, ___VARIA
     // MARK: - View
 
     // MARK: - Property
-    var router: ___VARIABLE_productName___Routable?
+    var router: (any ___VARIABLE_productName___Routable)?
 
     // MARK: - Initializer
 

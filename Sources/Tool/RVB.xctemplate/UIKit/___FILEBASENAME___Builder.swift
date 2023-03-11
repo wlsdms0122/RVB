@@ -17,11 +17,11 @@ public struct ___VARIABLE_productName___Parameter {
 }
 
 public protocol ___VARIABLE_productName___Buildable: Buildable {
-    func build(with parameter: ___VARIABLE_productName___Parameter) -> ___VARIABLE_productName___Controllable
+    func build(with parameter: ___VARIABLE_productName___Parameter) -> any ___VARIABLE_productName___Controllable
 }
 
 public final class ___VARIABLE_productName___Builder: Builder<___VARIABLE_productName___Dependency>, ___VARIABLE_productName___Buildable {
-    public func build(with parameter: ___VARIABLE_productName___Parameter) -> ___VARIABLE_productName___Controllable {
+    public func build(with parameter: ___VARIABLE_productName___Parameter) -> any ___VARIABLE_productName___Controllable {
         let viewController = ___VARIABLE_productName___ViewController()
         let router = ___VARIABLE_productName___Router()
         
