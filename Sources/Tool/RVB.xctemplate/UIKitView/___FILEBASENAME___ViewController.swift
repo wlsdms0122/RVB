@@ -12,7 +12,7 @@ final class ___VARIABLE_productName___ViewController: UIViewController, ___VARIA
     private let root = ___VARIABLE_productName___View()
 
     // MARK: - Property
-    var router: ___VARIABLE_productName___Routable?
+    var router: (any ___VARIABLE_productName___Routable)?
 
     // MARK: - Initializer
 
