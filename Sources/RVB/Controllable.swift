@@ -19,6 +19,7 @@ public protocol UIViewControllable: Controllable where Self: UIViewController { 
 #if os(macOS)
 import AppKit
 
+public protocol NSWindowControllable: Controllable where Self: NSWindowController { }
 public protocol NSViewControllable: Controllable where Self: NSViewController { }
 #endif
 
